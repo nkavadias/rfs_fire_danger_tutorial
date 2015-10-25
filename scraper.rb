@@ -9,6 +9,7 @@ agent = Mechanize.new
 #puts "hello world"
 # # Read in a page
 page = agent.get("http://www.rfs.nsw.gov.au/fire-information/fdr-and-tobans")
+now = Date.today
 #
 # # Find somehing on the page using css selectors
  #p page.at(".danger-ratings-table").search("tr").first
@@ -21,6 +22,7 @@ page.at(".danger-ratings-table tbody").search("tr").each do | row |
   councils_affected    = row.search("td")[5].text
 
   record ={
+    date: now,
     area: area,
     today_danger: today_danger,
     today_ban: today_ban,
@@ -30,7 +32,7 @@ page.at(".danger-ratings-table tbody").search("tr").each do | row |
   }
   #puts  area +" "+ " " +today_danger + " "+ today_ban +" " + tomorrow_ban + " " + councils_affected
   p record
-  ScraperWiki.save_sqlite( [:area], record)
+  ScraperWiki.save_sqlite( [:area, :date], record)
 end
 # # Write out to the sqlite database using scraperwiki library
 
