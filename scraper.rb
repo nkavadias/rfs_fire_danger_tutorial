@@ -19,10 +19,21 @@ page.at(".danger-ratings-table tbody").search("tr").each do | row |
   tomorrow_danger      = row.search("td")[3].text
   tomorrow_ban         = row.search("td")[4].text
   councils_affected    = row.search("td")[5].text
-  puts  area +" "+ " " +today_danger + " "+ today_ban +" " + tomorrow_ban + " " + councils_affected
+
+  record ={
+    area: area,
+    today_danger: today_danger,
+    today_ban: today_ban,
+    tomorrow_danger:tomorrow_danger,
+    tomorrow_ban:tomorrow_ban,
+    councils_affected: councils_affected
+  }
+  #puts  area +" "+ " " +today_danger + " "+ today_ban +" " + tomorrow_ban + " " + councils_affected
+  p record
+  ScraperWiki.save_sqlite( [:area], record)
 end
 # # Write out to the sqlite database using scraperwiki library
-# ScraperWiki.save_sqlite( ["name"], {"name" => "susan", "occupation" => "software developer"})
+
 #
 # # An arbitrary query against the database
 # ScraperWiki.select("* from data where 'name'='peter'")
